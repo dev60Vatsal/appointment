@@ -58,6 +58,9 @@ export class DayViewComponent implements OnInit, OnDestroy {
     } else {
       this.currentTimeTop = -1; // Hide if outside range
     }
+    
+    // For debugging, always show current time indicator
+    console.log('Current time:', this.currentTime.toLocaleTimeString(), 'Top:', this.currentTimeTop);
   }
 
   getAppointmentsForResource(resourceId: any) {

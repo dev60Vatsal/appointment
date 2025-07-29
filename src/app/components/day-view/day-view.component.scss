@@ -84,6 +84,7 @@
   height: calc((60 * (17 - 9)) * 2px);
   background-color: #fff;
   overflow: hidden;
+  min-height: 960px; /* 8 hours * 60 minutes * 2px per minute */
 }
 
 .current-time-indicator {

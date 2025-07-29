@@ -10,6 +10,7 @@
   box-sizing: border-box;
   min-height: 30px;
   position: relative;
+  height: 30px; /* Fixed height for 15-minute slots */
 }
 
 .time-slot:nth-child(even) {

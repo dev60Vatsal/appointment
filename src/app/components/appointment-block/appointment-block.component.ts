@@ -30,7 +30,9 @@ export class AppointmentBlockComponent implements OnInit {
     const durationMins = (end.getTime() - start.getTime()) / 60000;
 
     this.top = startMins * 2;       // 1 min = 2px
-    this.height = durationMins * 2;
+    this.height = Math.max(durationMins * 2, 20); // Minimum height of 20px
+    
+    console.log('Appointment:', this.appointment.title, 'Top:', this.top, 'Height:', this.height);
   }
 
   private setStyling(): void {
