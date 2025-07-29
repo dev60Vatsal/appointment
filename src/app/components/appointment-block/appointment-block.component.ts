@@ -32,11 +32,11 @@ export class AppointmentBlockComponent implements OnInit {
     this.top = startMins * 2;       // 1 min = 2px
     this.height = Math.max(durationMins * 2, 20); // Minimum height of 20px
     
-    console.log('Appointment:', this.appointment.title, 'Top:', this.top, 'Height:', this.height);
+    console.log('Appointment:', this.appointment.title || this.appointment.type, 'Top:', this.top, 'Height:', this.height);
   }
 
   private setStyling(): void {
-    this.label = this.appointment.title || this.appointment.type;
+    this.label = this.appointment.title || this.appointment.type || 'Unknown';
 
     if (this.appointment.type === 'unavailable') {
       this.background = '#9e9e9e'; // gray for unavailable

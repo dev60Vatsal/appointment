@@ -11,6 +11,7 @@
   min-height: 30px;
   position: relative;
   height: 30px; /* Fixed height for 15-minute slots */
+  z-index: 2;
 }
 
 .time-slot:nth-child(even) {
