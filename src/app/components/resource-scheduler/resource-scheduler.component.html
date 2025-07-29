@@ -1,0 +1,96 @@
+<div class="scheduler-container">
+  <!-- Header -->
+  <div class="scheduler-header">
+    <div class="header-left">
+      <h1 class="app-title">Appointments</h1>
+      <div class="date-navigation">
+        <button class="btn btn-primary">Today</button>
+        <div class="date-selector">
+          <button class="nav-btn">‹</button>
+          <span class="current-date">{{ getDayDisplay() }}</span>
+          <button class="nav-btn">›</button>
+        </div>
+      </div>
+    </div>
+    <div class="header-right">
+      <button class="btn btn-primary active">Day</button>
+      <button class="btn btn-secondary">Week</button>
+      <button class="btn btn-primary add-btn">
+        <span>Add</span>
+        <span class="plus">+</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Main Scheduler Grid -->
+  <div class="scheduler-grid">
+    <!-- Time Column -->
+    <div class="time-column">
+      <div class="time-header"></div>
+      <div class="time-slots" [style.height]="getColumnHeight()">
+        <div 
+          *ngFor="let time of getTimeSlots()" 
+          class="time-slot"
+          [style.height]="slotDuration * 2 + 'px'"
+        >
+          {{ time }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Resource Columns -->
+    <div class="resource-columns">
+      <div 
+        *ngFor="let resource of resources" 
+        class="resource-column"
+        [style.height]="getColumnHeight()"
+      >
+        <!-- Resource Header -->
+        <div class="resource-header">
+          <div class="resource-avatar">{{ resource.avatar }}</div>
+          <div class="resource-name">{{ resource.name }}</div>
+        </div>
+
+        <!-- Resource Body -->
+        <div class="resource-body">
+          <!-- Current Time Indicator -->
+          <div 
+            *ngIf="isCurrentTimeVisible()"
+            class="current-time-indicator"
+            [style.top.px]="currentTimeTop"
+          >
+            <div class="time-label">{{ getCurrentTimeDisplay() }}</div>
+          </div>
+
+          <!-- Grid Lines -->
+          <div class="grid-lines">
+            <div 
+              *ngFor="let hour of [].constructor(endHour - startHour); let i = index"
+              class="hour-line"
+              [style.top.px]="i * 60 * 2"
+            ></div>
+          </div>
+
+          <!-- Appointments -->
+          <div 
+            *ngFor="let appointment of getAppointmentsForResource(resource.id)"
+            class="appointment-block"
+            [style.top.px]="getAppointmentTop(appointment)"
+            [style.height.px]="getAppointmentHeight(appointment)"
+            [style.backgroundColor]="appointment.color || '#8B5CF6'"
+          >
+            <div class="appointment-content">
+              <div class="appointment-title">{{ appointment.title }}</div>
+              <div class="appointment-client" *ngIf="appointment.clientName">
+                {{ appointment.clientName }} {{ getAppointmentTimeRange(appointment) }}
+              </div>
+              <div class="appointment-status" *ngIf="appointment.status === 'no-show'">
+                ✕ No-show
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

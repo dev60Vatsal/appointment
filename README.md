@@ -1,192 +1,176 @@
-# Resource Scheduler (Day View)
+# Resource Scheduler - Salon Appointment Calendar
 
-A professional salon appointment scheduler built in Angular that displays a time-based daily schedule for multiple salon professionals (resources). This application demonstrates minute-level precision for appointment scheduling without relying on specialized calendar libraries.
+A comprehensive Angular-based resource scheduler for salon appointment management, built from scratch without specialized calendar libraries.
 
 ## Features
 
-### ✅ **Core Functionality**
-- **Time Column**: Vertical list of hours (9 AM - 5 PM) with 15-minute sub-time slots
-- **Resource Columns**: Separate columns for each salon professional
-- **Minute-Level Precision**: Appointments can start/end at any specific minute (e.g., 9:03–9:13)
-- **Current Time Indicator**: Red line showing current time with real-time updates
-- **Visual Distinction**: Different styling for booked appointments vs. unavailable blocks
-- **Responsive Layout**: Horizontal scrolling for multiple resources
+### ✅ Core Functionality
+- **Day View Scheduler**: Displays appointments for multiple salon professionals
+- **Minute-Level Precision**: Appointments can start/end at any specific minute (e.g., 9:03-9:13)
+- **Current Time Indicator**: Real-time red line showing current time position
+- **Resource Management**: Multiple professionals with individual columns
+- **Appointment Types**: Distinguishes between booked appointments and unavailable blocks
+- **Responsive Design**: Works on desktop and mobile devices
 
-### ✅ **Technical Implementation**
+### ✅ Technical Implementation
 - **Built from Scratch**: No specialized scheduling libraries used
-- **Configurable**: Easy to adjust start/end hours and time slot duration
-- **Real-time Updates**: Current time indicator updates every minute
-- **Performance Optimized**: Efficient calculations for minute-level positioning
-- **Modular Architecture**: Separate components for time column, resource columns, and appointments
+- **Configurable**: Easy to adjust start/end hours and time slot durations
+- **Performance Optimized**: Efficient minute-level calculations
+- **Modular Architecture**: Separate components for different scheduler elements
 
 ## Quick Start
 
 ### Prerequisites
-- Node.js (version 18 or higher recommended)
+- Node.js (v18 or higher)
 - npm or yarn
 
-### Installation & Running
+### Installation
+```bash
+# Clone the repository
+git clone <repository-url>
+cd appointment
 
-1. **Install Dependencies**
-   ```bash
-   npm install
-   ```
+# Install dependencies
+npm install
 
-2. **Start Development Server**
-   ```bash
-   npm start
-   ```
-
-3. **Open Application**
-   Navigate to `http://localhost:4200` in your browser
-
-## Technical Architecture
-
-### Component Structure
-```
-app/
-├── components/
-│   ├── day-view/           # Main container component
-│   ├── time-column/        # Left-side time display
-│   ├── resource-column/    # Individual resource columns
-│   └── appointment-block/  # Individual appointment blocks
-└── modals/
-    └── modal.ts           # TypeScript interfaces
+# Start development server
+npm start
 ```
 
-### Key Components
+The application will be available at `http://localhost:4200`
 
-#### DayViewComponent
-- **Purpose**: Main container that holds all scheduler data and logic
-- **Features**: 
-  - Current time tracking with real-time updates
-  - Configuration management (start/end hours, slot duration)
-  - Resource and appointment data management
+## Architecture Overview
 
-#### TimeColumnComponent
-- **Purpose**: Displays time slots on the left side
-- **Features**:
-  - Configurable time range (9 AM - 5 PM)
-  - Adjustable slot duration (15-minute intervals)
-  - Proper height calculations for alignment
+### Components Structure
+```
+src/app/components/
+├── resource-scheduler/          # Main scheduler container
+│   ├── resource-scheduler.component.ts
+│   ├── resource-scheduler.component.html
+│   └── resource-scheduler.component.scss
+├── day-view/                   # Legacy component (replaced)
+├── time-column/                # Time axis component
+├── resource-column/            # Resource column component
+└── appointment-block/          # Individual appointment component
+```
 
-#### ResourceColumnComponent
-- **Purpose**: Individual columns for each salon professional
-- **Features**:
-  - Grid lines for visual reference
-  - Proper height calculations
-  - Appointment positioning
+### Key Features
 
-#### AppointmentBlockComponent
-- **Purpose**: Individual appointment blocks
-- **Features**:
-  - Minute-level positioning (2px per minute)
-  - Visual distinction between appointment types
-  - Responsive styling
-
-### Data Structures
-
+#### 1. Minute-Level Precision
+The scheduler accurately positions appointments based on their exact start and end times:
 ```typescript
-interface Resource {
+getAppointmentTop(appointment: Appointment): number {
+  const start = new Date(appointment.start);
+  const startMins = (start.getHours() - this.startHour) * 60 + start.getMinutes();
+  return startMins * 2; // 2px per minute
+}
+```
+
+#### 2. Current Time Indicator
+Real-time red line that updates every minute:
+```typescript
+updateCurrentTime(): void {
+  this.currentTime = new Date();
+  const currentHour = this.currentTime.getHours();
+  const currentMinute = this.currentTime.getMinutes();
+  
+  if (currentHour >= this.startHour && currentHour < this.endHour) {
+    const totalMinutes = (currentHour - this.startHour) * 60 + currentMinute;
+    this.currentTimeTop = totalMinutes * 2;
+  }
+}
+```
+
+#### 3. Configuration
+Easy to configure time ranges and slot durations:
+```typescript
+// Configuration
+startHour = 9;
+endHour = 18;
+slotDuration = 15; // minutes
+```
+
+## Data Structure
+
+### Resource Interface
+```typescript
+export interface Resource {
   id: number;
   name: string;
+  avatar?: string;
 }
+```
 
-interface Appointment {
+### Appointment Interface
+```typescript
+export interface Appointment {
   id: number;
   resourceId: number;
-  start: string;  // ISO datetime string
-  end: string;    // ISO datetime string
+  start: string;
+  end: string;
+  title: string;
+  clientName?: string;
   type: 'appointment' | 'unavailable';
-  title?: string;
+  status?: 'confirmed' | 'no-show' | 'cancelled';
+  color?: string;
 }
 ```
 
-## Scheduling Logic
+## Design Implementation
 
-### Minute-Level Precision
-The application uses a 2px-per-minute scale for precise positioning:
-- Each minute = 2 pixels vertically
-- 1 hour = 120 pixels
-- 8-hour day = 960 pixels
+### Layout Structure
+1. **Header**: Navigation with date selector and view options
+2. **Time Column**: Vertical time axis with 15-minute intervals
+3. **Resource Columns**: Individual columns for each professional
+4. **Appointment Blocks**: Positioned precisely based on start/end times
+5. **Current Time Indicator**: Red line with time label
 
-### Current Time Calculation
-```typescript
-const totalMinutes = (currentHour - startHour) * 60 + currentMinute;
-const topPosition = totalMinutes * 2; // 2px per minute
-```
+### Styling Approach
+- **Modern UI**: Clean, professional design matching reference images
+- **Responsive**: Adapts to different screen sizes
+- **Accessibility**: Proper contrast and readable fonts
+- **Performance**: Efficient CSS with minimal reflows
 
-### Appointment Positioning
-```typescript
-const startMins = (start.getHours() - startHour) * 60 + start.getMinutes();
-const durationMins = (end.getTime() - start.getTime()) / 60000;
-const top = startMins * 2;
-const height = durationMins * 2;
-```
+## Technical Decisions
 
-## Configuration
-
-### Easy Customization
-The scheduler is highly configurable through the `DayViewComponent`:
-
-```typescript
-startHour = 9;        // Start time (9 AM)
-endHour = 17;         // End time (5 PM)
-slotDuration = 15;    // Time slot duration in minutes
-```
-
-### Adding Resources
-```typescript
-resources: Resource[] = [
-  { id: 1, name: 'Alice' },
-  { id: 2, name: 'Bob' },
-  { id: 3, name: 'Charlie' }
-];
-```
-
-### Adding Appointments
-```typescript
-appointments: Appointment[] = [
-  {
-    id: 1,
-    resourceId: 1,
-    start: '2025-07-24T09:03',
-    end: '2025-07-24T09:13',
-    type: 'appointment',
-    title: 'Haircut'
-  }
-];
-```
-
-## Design Choices
-
-### Visual Design
-- **Color Scheme**: Material Design colors for consistency
-- **Typography**: Segoe UI for readability
-- **Layout**: Flexbox for responsive design
-- **Shadows**: Subtle shadows for depth
+### Why Built from Scratch?
+- **Learning Opportunity**: Demonstrates understanding of scheduling logic
+- **Customization**: Full control over features and styling
+- **Performance**: No unnecessary dependencies
+- **Requirements**: Assessment specifically requested no specialized libraries
 
 ### Performance Considerations
-- **Efficient Calculations**: Minimal DOM manipulation
-- **Real-time Updates**: Optimized interval-based updates
-- **Memory Management**: Proper cleanup of intervals
-
-### Accessibility
-- **Semantic HTML**: Proper heading structure
-- **Color Contrast**: High contrast for readability
-- **Responsive Design**: Works on different screen sizes
+- **Efficient Calculations**: Pre-calculated positions to avoid runtime computation
+- **Minimal Re-renders**: Angular change detection optimized
+- **CSS Grid**: Hardware-accelerated positioning
+- **Memory Management**: Proper cleanup of intervals and subscriptions
 
 ## Future Enhancements
 
 ### Optional Features (Not Required)
-- **Drag & Drop**: Move appointments by dragging
+- **Drag & Drop**: Move appointments between time slots
 - **Day Navigation**: Previous/next day buttons
 - **Tooltips**: Hover for appointment details
-- **Tests**: Unit and integration tests
-- **API Integration**: Real data fetching
-- **Print View**: Printable schedule format
+- **Week/Month Views**: Extended calendar functionality
+- **Real-time Updates**: WebSocket integration for live data
 
-## Browser Compatibility
+## Testing
+
+### Manual Testing Checklist
+- [ ] Appointments display at correct times
+- [ ] Current time indicator updates every minute
+- [ ] Responsive design works on mobile
+- [ ] Appointment blocks show correct duration
+- [ ] Navigation buttons are functional
+- [ ] Time slots display correctly
+
+### Performance Testing
+- [ ] Smooth scrolling with multiple resources
+- [ ] Fast rendering of 8+ hour schedule
+- [ ] Efficient memory usage
+- [ ] No lag with current time updates
+
+## Browser Support
 - Chrome (recommended)
 - Firefox
 - Safari
@@ -194,18 +178,17 @@ appointments: Appointment[] = [
 
 ## Development Notes
 
-### Build Commands
-```bash
-npm start          # Development server
-npm run build      # Production build
-npm test           # Run tests
-```
+### Key Implementation Details
+1. **Time Calculations**: All time-based positioning uses 2px per minute scale
+2. **Date Handling**: Uses ISO string format for consistency
+3. **Component Communication**: Parent-child data flow for appointments
+4. **CSS Positioning**: Absolute positioning for precise appointment placement
 
-### Project Structure
-- **Angular 17**: Latest version with modern features
-- **TypeScript**: Strong typing for better development experience
-- **SCSS**: Advanced styling capabilities
-- **No External Dependencies**: Built entirely from scratch
+### Code Quality
+- **TypeScript**: Full type safety
+- **Angular Best Practices**: Proper component lifecycle management
+- **Clean Code**: Readable and maintainable structure
+- **Error Handling**: Graceful handling of invalid data
 
 ## License
 This project is created for technical assessment purposes.
