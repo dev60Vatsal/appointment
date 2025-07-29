@@ -1,43 +1,110 @@
 .scheduler-container {
-    display: flex;
-    height: 100%;
-    border: 1px solid #ddd;
-    overflow-x: auto;
-    font-family: 'Segoe UI', sans-serif;
-  }
-  
-  .time-col {
-    width: 80px;
-    background: #f9f9f9;
-    border-right: 1px solid #ccc;
-  }
-  
-  .resource-cols {
-    display: flex;
-    flex-grow: 1;
-    min-width: 600px;
-  }
-  
-  .resource {
-    flex: 1;
-    border-right: 1px solid #eee;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .resource-header {
-    background-color: #3f51b5;
-    color: white;
-    padding: 8px;
-    font-weight: 600;
-    font-size: 14px;
-    text-align: center;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  .resource-body {
-    position: relative;
-    height: calc((60 * (endHour - startHour)) * 2px);
-    background-color: #fff;
-  }
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: #fff;
+}
+
+.scheduler-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  z-index: 100;
+}
+
+.scheduler-header h1 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.current-time-display {
+  font-size: 16px;
+  font-weight: 500;
+  background: rgba(255,255,255,0.2);
+  padding: 8px 16px;
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+}
+
+.scheduler-main {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.time-col {
+  width: 80px;
+  background: #f9f9f9;
+  border-right: 1px solid #ccc;
+  flex-shrink: 0;
+}
+
+.time-header {
+  background-color: #3f51b5;
+  color: white;
+  padding: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+.resource-cols {
+  display: flex;
+  flex-grow: 1;
+  min-width: 600px;
+  overflow-x: auto;
+}
+
+.resource {
+  flex: 1;
+  border-right: 1px solid #eee;
+  display: flex;
+  flex-direction: column;
+  min-width: 150px;
+}
+
+.resource-header {
+  background-color: #3f51b5;
+  color: white;
+  padding: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+.resource-body {
+  position: relative;
+  height: calc((60 * (17 - 9)) * 2px);
+  background-color: #fff;
+  overflow: hidden;
+}
+
+.current-time-indicator {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: #f44336;
+  z-index: 10;
+  box-shadow: 0 0 4px rgba(244, 67, 54, 0.5);
+}
+
+.current-time-indicator::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: -3px;
+  width: 0;
+  height: 0;
+  border-left: 6px solid #f44336;
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+}
   

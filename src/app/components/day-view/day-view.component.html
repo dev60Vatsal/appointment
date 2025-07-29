@@ -1,23 +1,43 @@
 <div class="scheduler-container">
+  <!-- Header with current time -->
+  <div class="scheduler-header">
+    <h1>Salon Appointment Scheduler</h1>
+    <div class="current-time-display">
+      Current Time: {{ currentTime | date:'shortTime' }}
+    </div>
+  </div>
+
+  <!-- Main Scheduler -->
+  <div class="scheduler-main">
     <!-- Time Column -->
     <div class="time-col">
+      <div class="time-header">Time</div>
       <app-time-column
         [startHour]="startHour"
         [endHour]="endHour"
         [slotDuration]="slotDuration"
       ></app-time-column>
     </div>
-  
+
     <!-- Resource Columns -->
     <div class="resource-cols">
       <div class="resource" *ngFor="let resource of resources">
         <div class="resource-header">{{ resource.name }}</div>
         <div class="resource-body">
+          <!-- Current Time Indicator -->
+          <div 
+            *ngIf="isCurrentTimeVisible()"
+            class="current-time-indicator"
+            [style.top.px]="currentTimeTop"
+          ></div>
+          
           <app-resource-column
             [appointments]="getAppointmentsForResource(resource.id)"
             [startHour]="startHour"
+            [endHour]="endHour"
           ></app-resource-column>
         </div>
       </div>
     </div>
   </div>
+</div>

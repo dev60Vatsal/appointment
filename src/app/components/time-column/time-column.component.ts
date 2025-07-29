@@ -13,6 +13,14 @@ export class TimeColumnComponent implements OnInit {
   timeSlots: string[] = [];
 
   ngOnInit(): void {
+    this.generateTimeSlots();
+  }
+
+  ngOnChanges(): void {
+    this.generateTimeSlots();
+  }
+
+  private generateTimeSlots(): void {
     const times: string[] = [];
 
     for (let hour = this.startHour; hour < this.endHour; hour++) {
@@ -26,4 +34,7 @@ export class TimeColumnComponent implements OnInit {
     this.timeSlots = times;
   }
 
+  getTimeSlotHeight(): string {
+    return `${this.slotDuration * 2}px`; // 2px per minute
+  }
 }

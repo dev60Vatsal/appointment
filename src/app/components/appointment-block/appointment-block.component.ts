@@ -15,8 +15,14 @@ export class AppointmentBlockComponent implements OnInit {
   height = 0;
   background = '#2196f3'; // default: appointment blue
   label = '';
+  borderColor = '#1976d2';
 
   ngOnInit(): void {
+    this.calculatePosition();
+    this.setStyling();
+  }
+
+  private calculatePosition(): void {
     const start = new Date(this.appointment.start);
     const end = new Date(this.appointment.end);
 
@@ -25,12 +31,26 @@ export class AppointmentBlockComponent implements OnInit {
 
     this.top = startMins * 2;       // 1 min = 2px
     this.height = durationMins * 2;
+  }
 
+  private setStyling(): void {
     this.label = this.appointment.title || this.appointment.type;
 
     if (this.appointment.type === 'unavailable') {
-      this.background = '#bdbdbd'; // gray for unavailable
+      this.background = '#9e9e9e'; // gray for unavailable
+      this.borderColor = '#757575';
+    } else {
+      this.background = '#2196f3'; // blue for appointments
+      this.borderColor = '#1976d2';
     }
   }
 
+  getStyles(): any {
+    return {
+      top: `${this.top}px`,
+      height: `${this.height}px`,
+      backgroundColor: this.background,
+      borderColor: this.borderColor
+    };
+  }
 }

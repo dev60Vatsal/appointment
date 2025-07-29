@@ -1,20 +1,27 @@
 .appointment {
-    position: absolute;
-    left: 4px;
-    right: 4px;
-    border-radius: 6px;
-    padding: 4px;
-    color: white;
-    font-size: 12px;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-  .appointment-label {
-    flex-grow: 1;
-  }
+  position: absolute;
+  left: 4px;
+  right: 4px;
+  border-radius: 4px;
+  padding: 6px 8px;
+  color: white;
+  font-size: 11px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  border: 1px solid;
+  z-index: 5;
+  min-height: 20px;
+}
+
+.appointment-label {
+  flex-grow: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
   

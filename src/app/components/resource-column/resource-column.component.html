@@ -1,8 +1,18 @@
-<div class="resource-column">
-    <app-appointment-block
-      *ngFor="let appointment of appointments"
-      [appointment]="appointment"
-      [startHour]="startHour"
-    ></app-appointment-block>
+<div class="resource-column" [style.height]="getColumnHeight()">
+  <!-- Grid Lines -->
+  <div class="grid-lines">
+    <div 
+      *ngFor="let hour of getHours()" 
+      class="hour-line"
+      [style.top.px]="(hour - startHour) * 60 * 2"
+    ></div>
   </div>
+  
+  <!-- Appointments -->
+  <app-appointment-block
+    *ngFor="let appointment of appointments"
+    [appointment]="appointment"
+    [startHour]="startHour"
+  ></app-appointment-block>
+</div>
   
