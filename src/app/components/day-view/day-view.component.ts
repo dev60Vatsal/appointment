@@ -23,12 +23,12 @@ export class DayViewComponent implements OnInit, OnDestroy {
   ];
 
   appointments: Appointment[] = [
-    { id: 1, resourceId: 1, start: '2025-07-24T09:03', end: '2025-07-24T09:13', type: 'appointment', title: 'Haircut' },
-    { id: 2, resourceId: 1, start: '2025-07-24T10:00', end: '2025-07-24T10:45', type: 'unavailable' },
-    { id: 3, resourceId: 2, start: '2025-07-24T11:15', end: '2025-07-24T11:50', type: 'appointment', title: 'Shave' },
-    { id: 4, resourceId: 3, start: '2025-07-24T13:10', end: '2025-07-24T13:45', type: 'appointment', title: 'Coloring' },
-    { id: 5, resourceId: 2, start: '2025-07-24T14:30', end: '2025-07-24T15:15', type: 'appointment', title: 'Styling' },
-    { id: 6, resourceId: 1, start: '2025-07-24T16:00', end: '2025-07-24T16:30', type: 'unavailable' }
+    { id: 1, resourceId: 1, start: '2025-07-29T09:03', end: '2025-07-29T09:13', type: 'appointment', title: 'Haircut' },
+    { id: 2, resourceId: 1, start: '2025-07-29T10:00', end: '2025-07-29T10:45', type: 'unavailable' },
+    { id: 3, resourceId: 2, start: '2025-07-29T11:15', end: '2025-07-29T11:50', type: 'appointment', title: 'Shave' },
+    { id: 4, resourceId: 3, start: '2025-07-29T13:10', end: '2025-07-29T13:45', type: 'appointment', title: 'Coloring' },
+    { id: 5, resourceId: 2, start: '2025-07-29T14:30', end: '2025-07-29T15:15', type: 'appointment', title: 'Styling' },
+    { id: 6, resourceId: 1, start: '2025-07-29T16:00', end: '2025-07-29T16:30', type: 'unavailable' }
   ];
 
   constructor() {}

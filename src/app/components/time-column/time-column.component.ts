@@ -1,11 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-time-column',
   templateUrl: './time-column.component.html',
   styleUrl: './time-column.component.scss'
 })
-export class TimeColumnComponent implements OnInit {
+export class TimeColumnComponent implements OnInit, OnChanges {
   @Input() startHour = 9;
   @Input() endHour = 17;
   @Input() slotDuration = 15; // in minutes
@@ -16,7 +16,7 @@ export class TimeColumnComponent implements OnInit {
     this.generateTimeSlots();
   }
 
-  ngOnChanges(): void {
+  ngOnChanges(changes: SimpleChanges): void {
     this.generateTimeSlots();
   }
 
