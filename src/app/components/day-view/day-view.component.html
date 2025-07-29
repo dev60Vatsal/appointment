@@ -1,0 +1,23 @@
+<div class="scheduler-container">
+    <!-- Time Column -->
+    <div class="time-col">
+      <app-time-column
+        [startHour]="startHour"
+        [endHour]="endHour"
+        [slotDuration]="slotDuration"
+      ></app-time-column>
+    </div>
+  
+    <!-- Resource Columns -->
+    <div class="resource-cols">
+      <div class="resource" *ngFor="let resource of resources">
+        <div class="resource-header">{{ resource.name }}</div>
+        <div class="resource-body">
+          <app-resource-column
+            [appointments]="getAppointmentsForResource(resource.id)"
+            [startHour]="startHour"
+          ></app-resource-column>
+        </div>
+      </div>
+    </div>
+  </div>

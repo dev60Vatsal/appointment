@@ -1,0 +1,43 @@
+.scheduler-container {
+    display: flex;
+    height: 100%;
+    border: 1px solid #ddd;
+    overflow-x: auto;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .time-col {
+    width: 80px;
+    background: #f9f9f9;
+    border-right: 1px solid #ccc;
+  }
+  
+  .resource-cols {
+    display: flex;
+    flex-grow: 1;
+    min-width: 600px;
+  }
+  
+  .resource {
+    flex: 1;
+    border-right: 1px solid #eee;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .resource-header {
+    background-color: #3f51b5;
+    color: white;
+    padding: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .resource-body {
+    position: relative;
+    height: calc((60 * (endHour - startHour)) * 2px);
+    background-color: #fff;
+  }
+  
